@@ -3,12 +3,22 @@
 #include <wiringPi.h>
 #include <stdint.h>
 
-#define USE_HORIZONTAL 0
+#define USE_HORIZONTAL 2  //设置横屏或者竖屏显示 0或1为竖屏 2或3为横屏
 
+#define LCD80160
 
+#ifdef LCD80160
+#if USE_HORIZONTAL==0||USE_HORIZONTAL==1
+#define LCD_W 80
+#define LCD_H 160
+#else
+#define LCD_W 160
+#define LCD_H 80
+#endif
+#else
 #define LCD_W 240
 #define LCD_H 240
-
+#endif
 
 extern const int LCD_CLK;
 extern const int LCD_MOSI;
@@ -21,8 +31,8 @@ extern const int LCD_BLK;
 #define LCD_SCLK_Clr() digitalWrite(LCD_CLK,LOW);
 #define LCD_SCLK_Set() digitalWrite(LCD_CLK,HIGH);
 
-#define LCD_MOSI_Clr() digitalWrite(LCD_MOSI,LOW);
-#define LCD_MOSI_Set() digitalWrite(LCD_MOSI,HIGH);
+#define LCD_SDIN_Clr() digitalWrite(LCD_MOSI,LOW);
+#define LCD_SDIN_Set() digitalWrite(LCD_MOSI,HIGH);
 
 #define LCD_RES_Clr()  digitalWrite(LCD_RES,LOW);
 #define LCD_RES_Set()  digitalWrite(LCD_RES,HIGH);

@@ -31,7 +31,7 @@ int main(int argc,char **argv) {
     FFmpegGetFile getFile;
 
     H264Decoder h264Decoder;
-    h264Decoder.init(true);
+    h264Decoder.init(true, LCD_W, LCD_H);
 
     getFile.setH264OutCallBack(std::bind(&H264Decoder::videoDecode, &h264Decoder,
             std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
@@ -43,7 +43,7 @@ int main(int argc,char **argv) {
 
     h264Decoder.setRGBCallBack( [&](void*, uint8_t * data, int w, int h, uint32_t){
         jpegReader.bit24tobit16(data,w,h);
-        LCD_ShowPicture(0,0, w, h, data);
+        LCD_ShowPicture(0,0, h, w, data);
     });
 
     getFile.start(argv[1]);

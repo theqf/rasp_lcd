@@ -540,20 +540,16 @@ void LCD_ShowFloatNum1(u16 x,u16 y,float num,u8 len,u16 fc,u16 bc,u8 sizey)
 ******************************************************************************/
 void LCD_ShowPicture(u16 x, u16 y, u16 length, u16 width, const u8 *pic)
 {
-#define LCD_W 240
-#define LCD_H 240
-
 	u16 i , j;
 	int tmp_length = (length > LCD_H - y) ? (LCD_H - y) : length;
     int tmp_width = (width > LCD_W - x) ? (LCD_W - x) : width;
-
-    LCD_Address_Set(x , y,x + tmp_length - 1,y + tmp_width - 1);
+    LCD_Address_Set(x , y,x + tmp_width - 1,y + tmp_length - 1);
 	for(i = 0; i < length; i++)
 	{
 	    if (i > tmp_length){
             break;
 	    }
-	    const uint8_t * pic_tmp = pic + i*length*2;
+	    const uint8_t * pic_tmp = pic + i* width *2;
 		for(j = 0; j < tmp_width; j++)
 		{
             LCD_WR_DATA8(pic_tmp[j*2]);
